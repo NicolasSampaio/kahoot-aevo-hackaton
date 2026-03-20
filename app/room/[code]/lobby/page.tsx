@@ -32,29 +32,46 @@ export default function LobbyPage() {
     const roomDataStr = sessionStorage.getItem("roomData");
     const playerId = sessionStorage.getItem("playerId");
 
+    console.log("[Lobby Debug] roomDataStr:", roomDataStr);
+    console.log("[Lobby Debug] playerId:", playerId);
+
     if (!roomDataStr || !playerId) {
+      console.log("[Lobby Debug] Dados ausentes, redirecionando...");
       router.push("/");
       return;
     }
 
     const roomData = JSON.parse(roomDataStr);
-    setIsHost(roomData.hostId === playerId);
+    console.log("[Lobby Debug] roomData:", roomData);
+    console.log("[Lobby Debug] roomData.hostId:", roomData.hostId);
+    console.log("[Lobby Debug] Comparando hostId === playerId:", roomData.hostId, "===", playerId, "=", roomData.hostId === playerId);
+    
+    const hostStatus = roomData.hostId === playerId;
+    console.log("[Lobby Debug] setIsHost:", hostStatus);
+    
+    setIsHost(hostStatus);
     setPlayers(roomData.players || []);
     setRoomName(roomData.roomName || "");
 
+    console.log("[Lobby Debug] Iniciando polling...");
     const interval = setInterval(async () => {
       try {
+        console.log("[Lobby Debug] Fazendo fetch para /api/rooms/" + roomCode);
         const response = await fetch(`/api/rooms/${roomCode}`);
+        console.log("[Lobby Debug] Response status:", response.status);
+        
         if (response.ok) {
           const data = await response.json();
+          console.log("[Lobby Debug] Room data recebida:", data);
+          
           if (data.success && data.room) {
-            // Atualiza sessionStorage e estado
+            console.log("[Lobby Debug] Atualizando players:", data.room.players);
             sessionStorage.setItem("roomData", JSON.stringify(data.room));
             setPlayers(data.room.players || []);
           }
         }
       } catch (err) {
-        console.error("Failed to fetch room data:", err);
+        console.error("[Lobby Debug] Failed to fetch room data:", err);
       }
     }, 2000);
 
