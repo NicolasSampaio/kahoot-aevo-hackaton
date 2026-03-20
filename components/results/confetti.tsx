@@ -32,19 +32,19 @@ export default function Confetti({
       '#FBBF24'  // amber-400
     ];
 
-    // Particle class
-    class Particle {
-      x: number;
-      y: number;
-      radius: number;
-      color: string;
-      rotation: number;
-      speed: number;
-      velocityX: number;
-      velocityY: number;
-      gravity: number;
-      opacity: number;
-      decay: number;
+  // Particle class
+  class Particle {
+    x!: number;
+    y!: number;
+    radius!: number;
+    color!: string;
+    rotation!: number;
+    speed!: number;
+    velocityX!: number;
+    velocityY!: number;
+    gravity!: number;
+    opacity!: number;
+    decay!: number;
 
       constructor() {
         this.reset();
@@ -73,17 +73,18 @@ export default function Confetti({
         if (this.opacity > 1) this.opacity = 1;
       }
 
-      draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.rotation);
-        ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      }
+    draw() {
+      if (!ctx) return;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
+      ctx.globalAlpha = this.opacity;
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(0, 0, this.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
     }
 
     // Create particles
