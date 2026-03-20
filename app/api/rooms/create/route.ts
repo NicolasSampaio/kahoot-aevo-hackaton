@@ -3,7 +3,6 @@
 // This architecture is SSE-based for Vercel compatibility
 
 import { NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
 import { setRoom, generateRoomCode } from "@/lib/server/roomStore";
 import { broadcastToRoom } from "@/lib/server/eventStreams";
 import { Room, Player } from "@/types/game";
@@ -24,7 +23,7 @@ export async function POST(request: Request) {
     const code = generateRoomCode();
 
     // Create host player
-    const hostId = uuidv4();
+    const hostId = Math.random().toString(36).substring(2) + Date.now().toString(36);
     const host: Player = {
       id: hostId,
       name: playerName,
@@ -36,7 +35,7 @@ export async function POST(request: Request) {
 
     // Create new room
     const room: Room = {
-      id: uuidv4(),
+      id: Math.random().toString(36).substring(2) + Date.now().toString(36),
       code,
       hostId,
       players: [host],

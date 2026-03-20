@@ -3,7 +3,6 @@
 // This architecture is SSE-based for Vercel compatibility
 
 import { NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
 import { getRoom, setRoom, addPlayerToRoom } from "@/lib/server/roomStore";
 import { broadcastToRoom } from "@/lib/server/eventStreams";
 import { Player } from "@/types/game";
@@ -46,7 +45,7 @@ export async function POST(request: Request) {
 
     // Create new player
     const newPlayer: Player = {
-      id: uuidv4(),
+      id: Math.random().toString(36).substring(2) + Date.now().toString(36),
       name: playerName,
       avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${playerName}`,
       score: 0,
