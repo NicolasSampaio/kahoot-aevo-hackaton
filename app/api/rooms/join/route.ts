@@ -3,7 +3,11 @@
 // This architecture is SSE-based for Vercel compatibility
 
 import { NextResponse } from "next/server";
-import { getRoom, setRoom, addPlayerToRoom } from "@/lib/server/roomStore";
+import {
+  getRoom,
+  setRoom,
+  addPlayerToRoom,
+} from "@/lib/server/roomStore-supabase";
 import { broadcastToRoom } from "@/lib/server/eventStreams";
 import { Player } from "@/types/game";
 
@@ -19,7 +23,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const room = getRoom(code);
+    const room = await getRoom(code);
     if (!room) {
       return NextResponse.json(
         { error: "Room not found" },
@@ -29,10 +33,7 @@ export async function POST(request: Request) {
 
     // Check if room is full
     if (room.players.length >= room.maxPlayers) {
-      return NextResponse.json(
-        { error: "Room is full" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Room is full" }, { status: 400 });
     }
 
     // Check if game has already started
@@ -55,7 +56,7 @@ export async function POST(request: Request) {
 
     // Add player to room
     try {
-      const updatedRoom = addPlayerToRoom(code, newPlayer);
+      const updatedRoom = await addPlayerToRoom(code, newPlayer);
       if (!updatedRoom) {
         return NextResponse.json(
           { error: "Failed to join room" },
@@ -78,7 +79,10 @@ export async function POST(request: Request) {
         player: newPlayer,
       });
     } catch (error) {
-      if (error instanceof Error && error.message === "Player name already taken") {
+      if (
+        error instanceof Error &&
+        error.message === "Player name already taken"
+      ) {
         return NextResponse.json(
           { error: "Player name already taken" },
           { status: 400 }

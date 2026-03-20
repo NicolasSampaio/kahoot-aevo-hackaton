@@ -3,7 +3,12 @@
 // This architecture is SSE-based for Vercel compatibility
 
 import { NextResponse } from "next/server";
-import { getRoom, setRoom, setRoomStatus, setRoomQuestions } from "@/lib/server/roomStore";
+import {
+  getRoom,
+  setRoom,
+  setRoomStatus,
+  setRoomQuestions,
+} from "@/lib/server/roomStore-supabase";
 import { broadcastToRoom } from "@/lib/server/eventStreams";
 import { Question } from "@/types/game";
 import { generateSampleQuestions } from "@/lib/game-logic";
@@ -20,7 +25,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const room = getRoom(code);
+    const room = await getRoom(code);
     if (!room) {
       return NextResponse.json(
         { error: "Room not found" },
@@ -54,10 +59,10 @@ export async function POST(request: Request) {
 
     // Set questions (use provided or generate sample)
     const gameQuestions: Question[] = questions || generateSampleQuestions();
-    setRoomQuestions(code, gameQuestions);
+    await setRoomQuestions(code, gameQuestions);
 
     // Update room status to playing
-    const updatedRoom = setRoomStatus(code, "playing");
+    const updatedRoom = await setRoomStatus(code, "playing");
     if (!updatedRoom) {
       return NextResponse.json(
         { error: "Failed to start game" },

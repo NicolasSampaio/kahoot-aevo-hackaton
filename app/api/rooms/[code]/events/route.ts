@@ -3,7 +3,7 @@
 // This architecture is SSE-based for Vercel compatibility
 // For production: use Redis / database or Ably / Pusher / Supabase Realtime
 
-import { getRoom } from "@/lib/server/roomStore";
+import { getRoom } from "@/lib/server/roomStore-supabase";
 import {
   broadcastToRoom,
   addEventStream,
@@ -17,7 +17,7 @@ export async function GET(
   const { code } = await Promise.resolve(params);
 
   // Check if room exists
-  const room = getRoom(code);
+  const room = await getRoom(code);
   if (!room) {
     return new Response(
       JSON.stringify({ error: "Room not found" }),
@@ -41,7 +41,9 @@ export async function GET(
             `data: ${JSON.stringify({
               type: "initial_state",
               payload: room,
-            })}\n\n`
+            })}
+
+`
           )
         );
       } catch {
@@ -55,7 +57,9 @@ export async function GET(
         try {
           controller.enqueue(
             encoder.encode(
-              `data: ${JSON.stringify({ type: "heartbeat", payload: {} })}\n\n`
+              `data: ${JSON.stringify({ type: "heartbeat", payload: {} })}
+
+`
             )
           );
         } catch {

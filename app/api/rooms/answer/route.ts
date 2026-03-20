@@ -3,7 +3,12 @@
 // This architecture is SSE-based for Vercel compatibility
 
 import { NextResponse } from "next/server";
-import { getRoom, setRoom, submitAnswer, updatePlayerScore } from "@/lib/server/roomStore";
+import {
+  getRoom,
+  setRoom,
+  submitAnswer,
+  updatePlayerScore,
+} from "@/lib/server/roomStore-supabase";
 import { broadcastToRoom } from "@/lib/server/eventStreams";
 import { calculatePoints } from "@/lib/scoring";
 
@@ -20,9 +25,17 @@ export async function POST(request: Request) {
     const { code, playerId, selectedOption, timeToAnswer } = body;
 
     // Validate required fields
-    if (!code || !playerId || selectedOption === undefined || timeToAnswer === undefined) {
+    if (
+      !code ||
+      !playerId ||
+      selectedOption === undefined ||
+      timeToAnswer === undefined
+    ) {
       return NextResponse.json(
-        { error: "Room code, player ID, selected option, and time to answer are required" },
+        {
+          error:
+            "Room code, player ID, selected option, and time to answer are required",
+        },
         { status: 400 }
       );
     }
@@ -35,7 +48,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const room = getRoom(code);
+    const room = await getRoom(code);
     if (!room) {
       return NextResponse.json(
         { error: "Room not found" },
@@ -80,16 +93,20 @@ export async function POST(request: Request) {
 
     // Calculate points
     const isCorrect = selectedOption === currentQuestion.correctOptionIndex;
-    const points = calculatePoints(isCorrect, timeToAnswer, currentQuestion.timeLimit);
+    const points = calculatePoints(
+      isCorrect,
+      timeToAnswer,
+      currentQuestion.timeLimit
+    );
 
     // Store the answer
-    submitAnswer(code, playerId, selectedOption, room.currentQuestionIndex);
+    await submitAnswer(code, playerId, selectedOption, room.currentQuestionIndex);
 
     // Update player score
-    updatePlayerScore(code, playerId, points);
+    await updatePlayerScore(code, playerId, points);
 
     // Get updated room
-    const updatedRoom = getRoom(code);
+    const updatedRoom = await getRoom(code);
     if (!updatedRoom) {
       return NextResponse.json(
         { error: "Failed to update room" },

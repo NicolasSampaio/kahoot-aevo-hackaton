@@ -3,7 +3,12 @@
 // This architecture is SSE-based for Vercel compatibility
 
 import { NextResponse } from "next/server";
-import { getRoom, setRoom, nextQuestion, setRoomStatus } from "@/lib/server/roomStore";
+import {
+  getRoom,
+  setRoom,
+  nextQuestion,
+  setRoomStatus,
+} from "@/lib/server/roomStore-supabase";
 import { broadcastToRoom } from "@/lib/server/eventStreams";
 
 export async function POST(request: Request) {
@@ -18,7 +23,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const room = getRoom(code);
+    const room = await getRoom(code);
     if (!room) {
       return NextResponse.json(
         { error: "Room not found" },
@@ -46,7 +51,7 @@ export async function POST(request: Request) {
     const nextIndex = room.currentQuestionIndex + 1;
     if (nextIndex >= room.questions.length) {
       // No more questions, finish the game
-      const updatedRoom = setRoomStatus(code, "results");
+      const updatedRoom = await setRoomStatus(code, "results");
       if (!updatedRoom) {
         return NextResponse.json(
           { error: "Failed to finish game" },
@@ -71,7 +76,7 @@ export async function POST(request: Request) {
     }
 
     // Move to next question
-    const updatedRoom = nextQuestion(code);
+    const updatedRoom = await nextQuestion(code);
     if (!updatedRoom) {
       return NextResponse.json(
         { error: "Failed to advance question" },

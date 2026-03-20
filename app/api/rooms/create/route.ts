@@ -3,14 +3,21 @@
 // This architecture is SSE-based for Vercel compatibility
 
 import { NextResponse } from "next/server";
-import { setRoom, generateRoomCode } from "@/lib/server/roomStore";
+import {
+  setRoom,
+  generateRoomCode,
+} from "@/lib/server/roomStore-supabase";
 import { broadcastToRoom } from "@/lib/server/eventStreams";
 import { Room, Player } from "@/types/game";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { playerName, maxPlayers = 10, questions: submittedQuestions = [] } = body;
+    const {
+      playerName,
+      maxPlayers = 10,
+      questions: submittedQuestions = [],
+    } = body;
 
     if (!playerName || typeof playerName !== "string") {
       return NextResponse.json(
@@ -20,10 +27,11 @@ export async function POST(request: Request) {
     }
 
     // Generate a unique room code
-    const code = generateRoomCode();
+    const code = await generateRoomCode();
 
     // Create host player
-    const hostId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    const hostId =
+      Math.random().toString(36).substring(2) + Date.now().toString(36);
     const host: Player = {
       id: hostId,
       name: playerName,
@@ -50,7 +58,7 @@ export async function POST(request: Request) {
     };
 
     // Store room
-    setRoom(code, room);
+    await setRoom(code, room);
 
     // Broadcast room created event (though there shouldn't be any listeners yet)
     broadcastToRoom(code, {
