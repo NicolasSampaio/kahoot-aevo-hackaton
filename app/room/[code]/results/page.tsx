@@ -1,3 +1,5 @@
+'use client';
+
 import { useParams } from 'next/navigation';
 import { useGameState } from '@/hooks/useGameState';
 import Podium from '@/components/results/podium';

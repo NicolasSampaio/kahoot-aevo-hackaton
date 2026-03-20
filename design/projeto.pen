@@ -1,4 +1,421 @@
 {
   "version": "2.9",
-  "children": []
+  "children": [
+    {
+      "type": "frame",
+      "id": "v7ARU",
+      "x": 0,
+      "y": 0,
+      "name": "Design System",
+      "width": 1200,
+      "height": 800,
+      "layout": "vertical",
+      "gap": 32,
+      "padding": 40,
+      "children": [
+        {
+          "type": "frame",
+          "id": "YmQnn",
+          "name": "Colors Section",
+          "width": "fill_container",
+          "fill": "#000000",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "OWieU",
+              "name": "title",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Design System - Cores",
+              "fontFamily": "Inter",
+              "fontSize": 32,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "G5upE",
+              "name": "swatchesRow",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "GIgkV",
+                  "name": "Primary Orange #F2722A",
+                  "width": 180,
+                  "height": 120,
+                  "fill": "#F2722A",
+                  "cornerRadius": 12,
+                  "layout": "vertical",
+                  "padding": 16,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "vUMSy",
+                      "name": "swatchLabel1",
+                      "fill": "#FFFFFF",
+                      "content": "Primary",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "CEuYe",
+                      "name": "swatchHex1",
+                      "fill": "#FFFFFF",
+                      "content": "#F2722A",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hzf2A",
+                  "name": "Black #000000",
+                  "width": 180,
+                  "height": 120,
+                  "fill": "#000000",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#333333"
+                  },
+                  "layout": "vertical",
+                  "padding": 16,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rZ1Hk",
+                      "name": "swatchLabel2",
+                      "fill": "#FFFFFF",
+                      "content": "Background",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "HrXBz",
+                      "name": "swatchHex2",
+                      "fill": "#FFFFFF",
+                      "content": "#000000",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "b3D3S",
+                  "name": "White #FFFFFF",
+                  "width": 180,
+                  "height": 120,
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#333333"
+                  },
+                  "layout": "vertical",
+                  "padding": 16,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "juYka",
+                      "name": "swatchLabel3",
+                      "fill": "#000000",
+                      "content": "Text Primary",
+                      "fontFamily": "Inter",
+                      "fontSize": 14,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "8amwv",
+                      "name": "swatchHex3",
+                      "fill": "#000000",
+                      "content": "#FFFFFF",
+                      "fontFamily": "Inter",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "O6UDH",
+          "name": "Typography Section",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "oe9Qk",
+              "name": "typoTitle",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Tipografia",
+              "fontFamily": "Inter",
+              "fontSize": 28,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "Nfq9z",
+              "name": "typoRow",
+              "width": "fill_container",
+              "gap": 32,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cG95C",
+                  "name": "h1",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Heading 1 - 48px",
+                  "fontFamily": "Inter",
+                  "fontSize": 48,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "gqvvL",
+                  "name": "h2",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Heading 2 - 32px",
+                  "fontFamily": "Inter",
+                  "fontSize": 32,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "52Ly2",
+                  "name": "h3",
+                  "fill": "#F2722A",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Heading 3 - 24px",
+                  "fontFamily": "Inter",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "encpU",
+              "name": "bodyRow",
+              "width": "fill_container",
+              "gap": 32,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "HB9OX",
+                  "name": "body",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Body text - 16px regular",
+                  "fontFamily": "Inter",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "WCARy",
+                  "name": "small",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Small text - 14px",
+                  "fontFamily": "Inter",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "1eED4",
+                  "name": "caption",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "content": "Caption - 12px",
+                  "fontFamily": "Inter",
+                  "fontSize": 12,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "15Y0t",
+          "name": "Components Section",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "P4lxK",
+              "name": "compTitle",
+              "fill": "#FFFFFF",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Componentes - Botões",
+              "fontFamily": "Inter",
+              "fontSize": 28,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "39Xfs",
+              "name": "primaryBtnRow",
+              "width": "fill_container",
+              "gap": 24,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "llHFu",
+                  "name": "Primary Button",
+                  "fill": "#F2722A",
+                  "cornerRadius": 8,
+                  "gap": 8,
+                  "padding": [
+                    16,
+                    32
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nYocK",
+                      "name": "primaryBtnText",
+                      "fill": "#FFFFFF",
+                      "content": "Primary Button",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "08FKU",
+                  "name": "Secondary Button",
+                  "fill": "#FFFFFF",
+                  "cornerRadius": 8,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 2,
+                    "fill": "#F2722A"
+                  },
+                  "gap": 8,
+                  "padding": [
+                    16,
+                    32
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "A9GsU",
+                      "name": "secondaryBtnText",
+                      "fill": "#000000",
+                      "content": "Secondary Button",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "BrXqL",
+                  "name": "Tertiary Button",
+                  "fill": "#00000000",
+                  "cornerRadius": 8,
+                  "gap": 8,
+                  "padding": [
+                    16,
+                    32
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "T0DT3",
+                      "name": "tertiaryBtnText",
+                      "fill": "#F2722A",
+                      "content": "Tertiary Button",
+                      "fontFamily": "Inter",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "background": {
+      "type": "color",
+      "value": "#000000"
+    },
+    "border": {
+      "type": "color",
+      "value": "#333333"
+    },
+    "primary": {
+      "type": "color",
+      "value": "#F2722A"
+    },
+    "surface": {
+      "type": "color",
+      "value": "#1A1A1A"
+    },
+    "text-primary": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "text-secondary": {
+      "type": "color",
+      "value": "#F2722A"
+    }
+  }
 }

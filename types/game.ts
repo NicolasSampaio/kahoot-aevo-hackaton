@@ -12,6 +12,7 @@ export interface Player {
   avatar: string;
   score: number;
   answers: Answer[];
+  isHost?: boolean;
 }
 
 export interface Question {
@@ -31,15 +32,21 @@ export interface Answer {
   points: number;
 }
 
+export type RoomStatus = "lobby" | "playing" | "results" | GameState;
+
 export interface Room {
   id: string;
   code: string;
   hostId: string;
   players: Player[];
   questions: Question[];
-  status: GameState;
+  status: RoomStatus;
   maxPlayers: number;
   currentQuestionIndex: number;
+  answers: { [questionIndex: number]: { [playerId: string]: number } };
+  scores: { [playerId: string]: number };
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface GameSession {
