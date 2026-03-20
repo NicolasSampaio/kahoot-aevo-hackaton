@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 
 export default function ResultsPage() {
   const params = useParams<{ code: string }>();
-  const { gameState, players, questions } = useGameEngine();
+  const { gameState, players, questions, isHost } = useGameEngine();
 
   if (!gameState || !players || !questions) {
     return <div>Loading...</div>;
@@ -41,7 +41,7 @@ export default function ResultsPage() {
 
         {/* Action Buttons */}
         <div className="flex flex-col space-y-4 mt-8">
-          {gameState.isHost && (
+          {isHost && (
             <>
               <Button 
                 variant="outline"
@@ -101,7 +101,7 @@ function generateResultsText(rankedPlayers: any[], questions: any[]): string {
   
   text += '\n❓ Question Breakdown:\n';
   questions.forEach((q: any, index: number) => {
-    const correctAnswerIndex = q.correctAnswer;
+    const correctAnswerIndex = q.correctOptionIndex;
     const correctAnswerText = q.options[correctAnswerIndex];
     const correctCount = q.answerDistribution?.[correctAnswerIndex] || 0;
     const percentage = Math.round((correctCount / q.totalPlayers) * 100);

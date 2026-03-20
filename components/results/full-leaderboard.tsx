@@ -6,10 +6,10 @@ interface FullLeaderboardProps {
     name: string;
     avatar: string;
     score: number;
-    correctAnswers: number;
-    totalQuestions: number;
-    averageResponseTime: number;
-    longestStreak: number;
+    correctAnswers?: number;
+    totalQuestions?: number;
+    averageResponseTime?: number;
+    longestStreak?: number;
   }>;
   currentPlayerId: string | null;
 }
@@ -61,7 +61,7 @@ export default function FullLeaderboard({ players, currentPlayerId }: FullLeader
               {/* Name */}
               <div className="flex-1 min-w-0 ml-4">
                 <p className="font-medium truncate">{player.name}</p>
-                <p className="text-sm text-gray-500">{player.correctAnswers}/${player.totalQuestions} correct</p>
+                <p className="text-sm text-gray-500">{player.correctAnswers ?? 0} correct</p>
               </div>
               
               {/* Score Bar */}

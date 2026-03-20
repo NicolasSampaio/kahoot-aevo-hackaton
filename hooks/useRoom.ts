@@ -29,16 +29,18 @@ export function useRoom(): UseRoomReturn {
         answers: [],
       };
 
-      const newRoom: Room = {
-        id: uuidv4(),
-        code: generateRoomCode(),
-        hostId,
-        players: [player],
-        questions: [],
-        status: "waiting",
-        maxPlayers,
-        currentQuestionIndex: 0,
-      };
+const newRoom: Room = {
+      id: uuidv4(),
+      code: generateRoomCode(),
+      hostId,
+      players: [player],
+      questions: [],
+      status: "waiting",
+      maxPlayers,
+      currentQuestionIndex: 0,
+      answers: {},
+      scores: { [hostId]: 0 },
+    };
 
       setRoom(newRoom);
       setLocalPlayer(player);

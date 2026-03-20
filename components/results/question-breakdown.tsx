@@ -1,19 +1,6 @@
 import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-
-interface Player {
-  id: string;
-  name: string;
-  avatar: string;
-  answers: number[]; // Array of selected option indices for each question
-}
-
-interface Question {
-  id: string;
-  text: string;
-  options: string[];
-  correctAnswer: number; // Index of the correct option
-}
+import { Player, Question } from '@/types/game';
 
 interface QuestionBreakdownProps {
   questions: Question[];
@@ -29,11 +16,11 @@ export default function QuestionBreakdown({ questions, players }: QuestionBreakd
     const distribution = new Array(q.options.length).fill(0);
     players.forEach(player => {
       const playerAnswer = player.answers?.[index];
-      if (playerAnswer !== undefined && playerAnswer >= 0 && playerAnswer < q.options.length) {
-        distribution[playerAnswer] = (distribution[playerAnswer] || 0) + 1;
+      if (playerAnswer && playerAnswer.selectedOption !== null && playerAnswer.selectedOption >= 0 && playerAnswer.selectedOption < q.options.length) {
+        distribution[playerAnswer.selectedOption] = (distribution[playerAnswer.selectedOption] || 0) + 1;
       }
     });
-    const correctCount = distribution[q.correctAnswer] || 0;
+    const correctCount = distribution[q.correctOptionIndex] || 0;
     const percentage = Math.round((correctCount / totalPlayers) * 100);
     return {
       ...q,
@@ -62,7 +49,7 @@ export default function QuestionBreakdown({ questions, players }: QuestionBreakd
 
   return (
     <div className="mb-8">
-      <div 
+      <div
         className="flex justify-between items-center w-full cursor-pointer p-4 bg-gray-50 rounded-lg hover:bg-gray-100"
         onClick={() => setIsExpanded(!isExpanded)}
       >
@@ -85,21 +72,21 @@ export default function QuestionBreakdown({ questions, players }: QuestionBreakd
                 </div>
               </div>
               <div className="mb-2">
-                <p className="text-sm text-gray-600">Correct Answer: <span className="font-medium">{q.options[q.correctAnswer]}</span></p>
+                <p className="text-sm text-gray-600">Correct Answer: <span className="font-medium">{q.options[q.correctOptionIndex]}</span></p>
               </div>
               <div className="mb-2">
                 <p className="text-sm text-gray-600">
                   <span className="font-medium">{q.percentage}%</span> of players got it right
                 </p>
                 <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-                  <div 
+                  <div
                     className="bg-indigo-600 h-full rounded-full"
                     style={{ width: `${q.percentage}%` }}
                   ></div>
                 </div>
               </div>
               <div className="text-xs text-gray-500">
-                {q.answerDistribution.map((count, optIndex) => (
+                {q.answerDistribution.map((count: number, optIndex: number) => (
                   <span key={optIndex} className="mr-2">
                     {q.options[optIndex]}: {count} players
                   </span>
