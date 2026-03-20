@@ -51,9 +51,35 @@ function PlayContent() {
     }, 1000);
   };
 
-  const handleJoinRoom = () => {
+  const handleJoinRoom = async () => {
     if (!playerNameInput.trim() || !joinedRoomCode.trim()) return;
-    router.push(`/play?room=${joinedRoomCode}&name=${encodeURIComponent(playerNameInput)}`);
+    
+    try {
+      const response = await fetch("/api/rooms/join", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code: joinedRoomCode.toUpperCase(),
+          playerName: playerNameInput.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.error || "Failed to join room");
+        return;
+      }
+
+      // Store room data locally
+      sessionStorage.setItem("roomData", JSON.stringify(data.room));
+      sessionStorage.setItem("playerId", data.player.id);
+      sessionStorage.setItem("isHost", "false");
+
+      router.push(`/room/${joinedRoomCode.toUpperCase()}/lobby`);
+    } catch (err) {
+      alert("Network error. Please try again.");
+    }
   };
 
   const handleCopyCode = () => {
