@@ -29,6 +29,10 @@ export default function LobbyPage() {
   const [isStarting, setIsStarting] = useState(false);
 
   useEffect(() => {
+    console.log("[Lobby Debug] Componente renderizando. isHost:", isHost, "players:", players.length);
+  });
+
+  useEffect(() => {
     const roomDataStr = sessionStorage.getItem("roomData");
     const playerId = sessionStorage.getItem("playerId");
 
@@ -79,6 +83,7 @@ export default function LobbyPage() {
   }, [router, roomCode]);
 
   const handleStartGame = () => {
+    console.log("[Lobby Debug] handleStartGame chamado");
     if (players.length < 2) return;
 
     setIsStarting(true);
