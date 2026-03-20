@@ -175,12 +175,14 @@ export default function LobbyPage() {
         <div className="mt-8">
           {isHost ? (
             <div className="text-center">
+              {console.log("[Lobby Debug] BOTÃO - isHost:", isHost, "players.length:", players.length, "isStarting:", isStarting, "condição disabled:", players.length < 2 || isStarting)}
               <Button
                 size="lg"
                 onClick={handleStartGame}
                 disabled={players.length < 2 || isStarting}
                 className="px-12 py-6 text-xl font-bold bg-gradient-to-r from-success to-primary hover:from-success/90 hover:to-primary/90"
               >
+                {console.log("[Lobby Debug] BOTÃO está renderizado")}
                 {isStarting ? (
                   <>
                     <Loader2 className="w-6 h-6 mr-2 animate-spin" />
