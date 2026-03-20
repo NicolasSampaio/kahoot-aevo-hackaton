@@ -54,45 +54,48 @@ export default function CreateRoom() {
     );
   };
 
-  const handleCreateRoom = () => {
+  const handleCreateRoom = async () => {
     if (!isValid()) return;
 
     setIsCreating(true);
 
-    const roomCode = generateRoomCode();
-    const playerId = uuidv4();
+    try {
+      const response = await fetch("/api/rooms/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          playerName: "Host",
+          maxPlayers,
+          questions: questions.map((q) => ({
+            id: q.id,
+            text: q.text,
+            options: q.options,
+            correctOptionIndex: q.correctOptionIndex,
+            timeLimit: q.timeLimit,
+          })),
+        }),
+      });
 
-    const roomData = {
-      roomId: uuidv4(),
-      roomCode,
-      roomName: roomName.trim(),
-      hostId: playerId,
-      hostName: "Host",
-      maxPlayers,
-      questions: questions.map((q) => ({
-        id: q.id,
-        text: q.text,
-        options: q.options,
-        correctOptionIndex: q.correctOptionIndex,
-        timeLimit: q.timeLimit,
-      })),
-      players: [
-        {
-          id: playerId,
-          name: "Host",
-          avatar: "🦊",
-          score: 0,
-          isHost: true,
-        },
-      ],
-      status: "waiting",
-    };
+      const data = await response.json();
 
-    sessionStorage.setItem("roomData", JSON.stringify(roomData));
-    sessionStorage.setItem("playerId", playerId);
-    sessionStorage.setItem("isHost", "true");
+      if (!response.ok) {
+        alert(data.error || "Failed to create room");
+        setIsCreating(false);
+        return;
+      }
 
-    router.push(`/room/${roomCode}/lobby`);
+      const { code, room, player } = data;
+
+      // Store room data locally
+      sessionStorage.setItem("roomData", JSON.stringify(room));
+      sessionStorage.setItem("playerId", player.id);
+      sessionStorage.setItem("isHost", "true");
+
+      router.push(`/room/${code}/lobby`);
+    } catch (err) {
+      alert("Network error. Please try again.");
+      setIsCreating(false);
+    }
   };
 
   return (

@@ -11,7 +11,7 @@ import { Room, Player } from "@/types/game";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { playerName, maxPlayers = 10 } = body;
+    const { playerName, maxPlayers = 10, questions: submittedQuestions = [] } = body;
 
     if (!playerName || typeof playerName !== "string") {
       return NextResponse.json(
