@@ -1,28 +1,25 @@
-import { useState, useEffect } from 'react';
-import { useSpring } from 'framer-motion';
+import { useEffect } from 'react';
+import { useSpring, useTransform, MotionValue, useMotionValue, motion } from 'framer-motion';
 
 interface ScoreCounterProps {
   count: number;
 }
 
 export default function ScoreCounter({ count }: ScoreCounterProps) {
-  const [displayCount, setDisplayCount] = useState(0);
-  const [, set] = useSpring({ 
-    to: 0, 
-    from: 0, 
-    onChange: (value) => {
-      setDisplayCount(Math.round(value));
-    }
+  const motionCount = useMotionValue(0);
+  const springCount = useSpring(motionCount, {
+    stiffness: 100,
+    damping: 30,
   });
+  const rounded = useTransform(springCount, (latest) => Math.round(latest));
 
-  // Update the spring target when the count prop changes
   useEffect(() => {
-    set({ to: count });
-  }, [count]);
+    motionCount.set(count);
+  }, [count, motionCount]);
 
   return (
     <div className="text-3xl font-bold text-indigo-600">
-      {displayCount}
+      <motion.span>{rounded}</motion.span>
     </div>
   );
 }
