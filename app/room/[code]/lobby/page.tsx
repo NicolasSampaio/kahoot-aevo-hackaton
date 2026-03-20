@@ -72,14 +72,14 @@ export default function LobbyPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-4 md:p-8">
+      <main className="min-h-screen bg-gradient-to-br from-card via-secondary to-background p-4 md:p-8">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         className="absolute top-6 left-6"
       >
         <Link href="/">
-          <Button variant="ghost" className="text-white/80 hover:bg-white/20">
+          <Button variant="ghost" className="text-muted-foreground hover:bg-card/20">
             <ArrowLeft className="w-5 h-5 mr-2" />
             Leave
           </Button>
@@ -92,30 +92,30 @@ export default function LobbyPage() {
         className="max-w-2xl mx-auto pt-12"
       >
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
             {roomName || "Quiz Room"}
           </h1>
-          <p className="text-white/60">Waiting for players to join...</p>
+          <p className="text-muted-foreground">Waiting for players to join...</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl">
-            <CardHeader className="text-center pb-2">
-              <CardTitle className="text-xl font-semibold text-gray-800">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <Card className="bg-card backdrop-blur-sm shadow-2xl">
+      <CardHeader className="text-center pb-2">
+      <CardTitle className="text-xl font-semibold text-card-foreground">
                 Room Code
               </CardTitle>
             </CardHeader>
             <CardContent className="pt-2">
               <RoomCodeDisplay code={roomCode} />
-              <p className="text-xs text-gray-500 text-center mt-4">
+              <p className="text-xs text-muted-foreground text-center mt-4">
                 Share this code with players
               </p>
-            </CardContent>
-          </Card>
+      </CardContent>
+      </Card>
 
-          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl">
-            <CardHeader className="text-center pb-2">
-              <CardTitle className="text-xl font-semibold text-gray-800">
+      <Card className="bg-card backdrop-blur-sm shadow-2xl">
+      <CardHeader className="text-center pb-2">
+      <CardTitle className="text-xl font-semibold text-card-foreground">
                 Players ({players.length})
               </CardTitle>
             </CardHeader>
@@ -132,8 +132,8 @@ export default function LobbyPage() {
                 ))}
               </AnimatePresence>
               {players.length < 2 && (
-                <div className="text-center py-4">
-                  <p className="text-gray-400 text-sm">
+      <div className="text-center py-4">
+      <p className="text-muted-foreground text-sm">
                     Waiting for more players...
                   </p>
                 </div>
@@ -149,7 +149,7 @@ export default function LobbyPage() {
                 size="lg"
                 onClick={handleStartGame}
                 disabled={players.length < 2 || isStarting}
-                className="px-12 py-6 text-xl font-bold bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700"
+                className="px-12 py-6 text-xl font-bold bg-gradient-to-r from-success to-primary hover:from-success/90 hover:to-primary/90"
               >
                 {isStarting ? (
                   <>
@@ -164,7 +164,7 @@ export default function LobbyPage() {
                 )}
               </Button>
               {players.length < 2 && (
-                <p className="text-white/60 text-sm mt-3">
+                <p className="text-muted-foreground text-sm mt-3">
                   At least 2 players required to start
                 </p>
               )}
@@ -175,13 +175,13 @@ export default function LobbyPage() {
               animate={{ opacity: 1 }}
               className="text-center"
             >
-              <div className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 rounded-full">
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-secondary/20 rounded-full">
                 <motion.span
                   animate={{ scale: [1, 1.2, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
-                  className="w-3 h-3 bg-yellow-400 rounded-full"
+                  className="w-3 h-3 bg-primary rounded-full"
                 />
-                <span className="text-white font-medium">
+                <span className="text-foreground font-medium">
                   Waiting for host to start...
                 </span>
               </div>
