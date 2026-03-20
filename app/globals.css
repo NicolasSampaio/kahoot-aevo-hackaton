@@ -16,6 +16,8 @@
     --accent-foreground: 20 70% 55%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
+    --success: 141 71% 45%;
+    --destructive: 0 85% 63%;
     --radius: 0.75rem;
     --border: 0 0% 80%;
     --input: 0 0% 80%;
@@ -35,6 +37,9 @@
     --accent-foreground: 20 70% 55%;
     --card: 0 0% 10%;
     --card-foreground: 0 0% 100%;
+    --success: 141 71% 45%;
+    --destructive: 0 85% 63%;
+    --radius: 0.75rem;
     --border: 0 0% 20%;
     --input: 0 0% 20%;
     --ring: 20 70% 55%;
@@ -57,7 +62,17 @@
 
 .timer-critical {
   animation: timerPulse 0.5s ease-in-out infinite;
-  color: #ef4444;
+  color: hsl(var(--destructive));
+}
+
+.answer-card-correct {
+  background: linear-gradient(135deg, hsl(var(--success)) 0%, hsl(var(--success) / 0.8) 100%);
+  color: white;
+}
+
+.answer-card-incorrect {
+  background: linear-gradient(135deg, hsl(var(--destructive)) 0%, hsl(var(--destructive) / 0.8) 100%);
+  color: white;
 }
 
 @keyframes timerPulse {

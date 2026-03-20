@@ -125,7 +125,7 @@ function PlayContent() {
           className="absolute top-6 left-6"
         >
           <Link href="/">
-            <Button variant="ghost" className="text-white hover:bg-white/20">
+            <Button variant="ghost" className="text-card-foreground hover:bg-card/20">
               <ArrowLeft className="w-5 h-5 mr-2" />
               Back
             </Button>
@@ -137,17 +137,17 @@ function PlayContent() {
           animate={{ opacity: 1, scale: 1 }}
           className="w-full max-w-md"
         >
-          <Card className="bg-white/95 backdrop-blur-sm shadow-2xl">
+          <Card className="bg-card backdrop-blur-sm shadow-2xl">
             <CardHeader className="text-center pb-2">
-              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                 Join Game
               </CardTitle>
-              <p className="text-gray-500 mt-2">Enter your name and room code</p>
+              <p className="text-muted-foreground mt-2">Enter your name and room code</p>
             </CardHeader>
 
             <CardContent className="space-y-6 pt-4">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Your Name</label>
+                <label className="text-sm font-medium text-card-foreground">Your Name</label>
                 <Input
                   type="text"
                   placeholder="Enter your name..."
@@ -159,7 +159,7 @@ function PlayContent() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Room Code</label>
+                <label className="text-sm font-medium text-card-foreground">Room Code</label>
                 <Input
                   type="text"
                   placeholder="Enter 6-digit code..."
@@ -175,7 +175,7 @@ function PlayContent() {
                 whileTap={{ scale: 0.98 }}
                 onClick={handleJoinRoom}
                 disabled={!playerNameInput.trim() || !joinedRoomCode.trim()}
-                className="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
+                className="w-full py-4 bg-gradient-to-r from-primary to-secondary text-primary-foreground font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all disabled:opacity-50"
               >
                 Join Room
               </motion.button>
@@ -197,10 +197,10 @@ function PlayContent() {
             exit={{ opacity: 0, scale: 0.9 }}
             className="text-center"
           >
-            <Card className="bg-white/95 backdrop-blur-sm shadow-2xl p-8">
-              <CardTitle className="text-2xl font-bold mb-4">Waiting for Players</CardTitle>
-              <div className="flex items-center justify-center gap-2 mb-6">
-                <span className="text-6xl font-mono font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+      <Card className="bg-card backdrop-blur-sm shadow-2xl p-8">
+      <CardTitle className="text-2xl font-bold mb-4">Waiting for Players</CardTitle>
+      <div className="flex items-center justify-center gap-2 mb-6">
+      <span className="text-6xl font-mono font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                   {roomCode}
                 </span>
                 <button
@@ -214,8 +214,8 @@ function PlayContent() {
                   )}
                 </button>
               </div>
-              <p className="text-gray-500">Share this code with your friends</p>
-              <div className="mt-8 flex items-center justify-center gap-2 text-gray-400">
+      <p className="text-muted-foreground">Share this code with your friends</p>
+      <div className="mt-8 flex items-center justify-center gap-2 text-muted-foreground">
                 <motion.div
                   animate={{ opacity: [0.5, 1, 0.5] }}
                   transition={{ duration: 2, repeat: Infinity }}
@@ -239,7 +239,7 @@ function PlayContent() {
             <motion.div
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 1, repeat: Infinity }}
-              className="text-[200px] font-bold text-white drop-shadow-lg"
+              className="text-[200px] font-bold text-foreground drop-shadow-lg"
             >
               3
             </motion.div>
@@ -256,8 +256,8 @@ function PlayContent() {
           >
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-4">
-                <div className="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 text-white font-bold">
-                  <Zap className="w-5 h-5 inline mr-2 text-yellow-300" />
+      <div className="bg-secondary/20 backdrop-blur-sm rounded-xl px-4 py-2 text-card-foreground font-bold">
+      <Zap className="w-5 h-5 inline mr-2 text-primary-foreground" />
                   Score: {score}
                 </div>
               </div>
@@ -271,7 +271,7 @@ function PlayContent() {
               </div>
             </div>
 
-            <Card className="bg-white shadow-2xl mb-6">
+            <Card className="bg-card shadow-2xl mb-6">
               <CardContent className="p-8">
                 <h2 className="text-2xl font-bold text-center mb-8">
                   {currentQuestion.text}
@@ -291,7 +291,7 @@ function PlayContent() {
                           : "bg-gray-100 hover:bg-gray-200"
                       )}
                     >
-                      <span className="inline-flex items-center justify-center w-8 h-8 bg-white/20 rounded-lg mr-3 text-white">
+                      <span className="inline-flex items-center justify-center w-8 h-8 bg-secondary/20 rounded-lg mr-3 text-card-foreground">
                         {String.fromCharCode(65 + index)}
                       </span>
                       {option}
@@ -323,7 +323,7 @@ function PlayContent() {
             >
               {selectedOption === currentQuestion?.correctOptionIndex ? "✓" : "✗"}
             </motion.div>
-            <p className="text-2xl text-white font-bold">
+            <p className="text-2xl text-card-foreground font-bold">
               {selectedOption === currentQuestion?.correctOptionIndex
                 ? "Correct! +Points"
                 : "Wrong!"}
@@ -339,7 +339,7 @@ function PlayContent() {
             exit={{ opacity: 0 }}
             className="w-full max-w-md"
           >
-            <Card className="bg-white shadow-2xl">
+            <Card className="bg-card shadow-2xl">
               <CardHeader>
                 <CardTitle className="text-2xl font-bold text-center">Leaderboard</CardTitle>
               </CardHeader>
@@ -362,7 +362,7 @@ function PlayContent() {
                         {rank === 1 ? "🥇" : rank === 2 ? "🥈" : "🥉"}
                       </span>
                       <span className="font-bold">{playerName}</span>
-                      <span className="ml-auto font-bold text-indigo-600">{score} pts</span>
+                      <span className="ml-auto font-bold text-primary">{score} pts</span>
                     </motion.div>
                   ))}
                 </div>
@@ -382,7 +382,7 @@ export default function PlayPage() {
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          className="w-12 h-12 border-4 border-white border-t-transparent rounded-full"
+          className="w-12 h-12 border-4 border-border border-t-transparent rounded-full"
         />
       </main>
     }>
