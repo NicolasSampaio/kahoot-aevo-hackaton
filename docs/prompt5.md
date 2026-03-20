@@ -1,47 +1,167 @@
-## Prompt 5 — Estado global e comunicação real-time
+You are an expert full-stack developer.
 
-```
-Add real-time multiplayer support and global state management to Kahoot Aevo.
+Implement real-time synchronization for the Kahoot Aevo game using **Server-Sent Events (SSE)**.
 
-Requirements:
+IMPORTANT CONSTRAINTS:
 
-**State Management (Zustand):**
-- Install and configure Zustand
-- Create /lib/store/game-store.ts with slices:
-  - roomSlice: room data, players list, questions
-  - gameSlice: current state, current question index, timer, answers received
-  - playerSlice: current player info, score, answer history
-- Migrate all component-local state to the Zustand store
-- Add computed selectors: currentQuestion, playerRanking, isHost
-
-**API Routes (Next.js Route Handlers):**
-- POST /api/rooms — create a room, return room code
-- GET /api/rooms/[code] — get room data
-- POST /api/rooms/[code]/join — add player to room
-- POST /api/rooms/[code]/start — host starts the game
-- POST /api/rooms/[code]/answer — player submits an answer
-- GET /api/rooms/[code]/state — get current game state
-
-**Real-time with Server-Sent Events (SSE) or WebSocket:**
-- Use a simple in-memory store (Map<string, Room>) on the server for now
-- SSE endpoint: GET /api/rooms/[code]/events — streams game state changes
-- Events: player-joined, game-started, next-question, answer-reveal, game-ended
-- Create /hooks/useRoomEvents.ts that connects to the SSE stream and updates Zustand store
-- Handle reconnection with exponential backoff
-
-**File structure:**
-- /lib/store/game-store.ts
-- /lib/server/room-manager.ts (in-memory room CRUD)
-- /app/api/rooms/route.ts
-- /app/api/rooms/[code]/route.ts
-- /app/api/rooms/[code]/join/route.ts
-- /app/api/rooms/[code]/start/route.ts
-- /app/api/rooms/[code]/answer/route.ts
-- /app/api/rooms/[code]/events/route.ts
-- /hooks/useRoomEvents.ts
-
-Do not add a database yet. In-memory storage is fine for the MVP.
-Do not change UI components — only wire them to the new store and API.
-```
+- The app will be deployed on **Vercel**
+- DO NOT use Socket.IO or custom WebSocket servers
+- Use **SSE (EventSource)** for real-time updates
+- Server must be stateless-friendly (but we will use in-memory store for MVP)
 
 ---
+
+## 1. Server-side room store
+
+Create a simple in-memory store:
+
+/lib/server/roomStore.ts
+
+- Use:
+  const rooms = new Map<string, Room>()
+
+- Each room should contain:
+  - players
+  - current question index
+  - answers
+  - scores
+  - status (lobby, playing, results)
+
+IMPORTANT:
+
+- This is ONLY for MVP
+- Add comments warning:
+  - Not persistent
+  - Not safe across multiple instances
+  - Will reset on redeploy
+
+---
+
+## 2. SSE endpoint
+
+Create route:
+
+/app/api/rooms/[code]/events/route.ts
+
+- Use Response with:
+  headers:
+  Content-Type: text/event-stream
+  Cache-Control: no-cache
+  Connection: keep-alive
+
+- Keep connection open
+
+- Send events:
+  - player_joined
+  - game_started
+  - question_changed
+  - answer_submitted
+  - scores_updated
+  - game_finished
+
+- Format:
+  data: JSON.stringify({ type, payload })
+
+- Send heartbeat every ~15 seconds
+
+---
+
+## 3. REST endpoints
+
+Create API routes:
+
+POST /api/rooms/create
+POST /api/rooms/join
+POST /api/rooms/start
+POST /api/rooms/answer
+
+Each route should:
+
+- Update roomStore
+- Broadcast event to SSE clients
+
+---
+
+## 4. SSE client hook
+
+Create:
+
+/hooks/useRoomEvents.ts
+
+- Use EventSource:
+  const source = new EventSource(`/api/rooms/${code}/events`)
+
+- Handle:
+  - open
+  - message
+  - error
+
+- Parse events and update global state
+
+- Implement reconnection:
+  - exponential backoff
+  - auto-reconnect
+
+---
+
+## 5. Global game store
+
+Create:
+
+/lib/store/gameStore.ts
+
+Use Zustand:
+
+State:
+
+- room
+- players
+- currentQuestion
+- answers
+- scores
+- status
+
+Actions:
+
+- setRoom
+- addPlayer
+- updateGameState
+- submitAnswer
+- updateScores
+
+---
+
+## 6. Integration
+
+- Replace local mock state (useRoom, useGameEngine)
+- Connect:
+  - API → roomStore
+  - SSE → Zustand store
+
+---
+
+## 7. Error handling
+
+Handle:
+
+- room not found
+- duplicate player
+- invalid answer
+- connection loss
+
+---
+
+## 8. Notes (VERY IMPORTANT)
+
+Add comments in code explaining:
+
+- This architecture is **SSE-based for Vercel compatibility**
+- In-memory store is NOT production-ready
+- For production:
+  - use Redis / database
+  - or use Ably / Pusher / Supabase Realtime
+
+---
+
+Goal:
+Deliver a working MVP with real-time gameplay that works on Vercel without WebSockets.
