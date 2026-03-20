@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { GameState } from '@/types/game';
 import { useGameEngine } from '@/hooks/useGameEngine';
-import { CountdownScreen } from '@/components/game/countdown-screen';
-import { QuestionScreen } from '@/components/game/question-screen';
-import { AnswerRevealScreen } from '@/components/game/answer-reveal-screen';
-import { MiniLeaderboard } from '@/components/game/mini-leaderboard';
-import { FinalResults } from '@/components/game/final-results';
+import CountdownScreen from '@/components/game/countdown-screen';
+import QuestionScreen from '@/components/game/question-screen';
+import AnswerRevealScreen from '@/components/game/answer-reveal-screen';
+import MiniLeaderboard from '@/components/game/mini-leaderboard';
+import FinalResults from '@/components/game/final-results';
 
 export default function RoomPlayPage({ params }: { params: { code: string } }) {
   const router = useRouter();

@@ -72,7 +72,7 @@ export default function AnswerCard({
         transition={{ type: 'spring', stiffness: 300, damping: 20, delay: isLocked ? 0.2 : 0 }}
       >
         {text}
-      </div>
+      </motion.div>
       
       {/* Selected state overlay */}
       {isSelected && !isLocked && (

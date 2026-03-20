@@ -31,8 +31,8 @@ export default function FullLeaderboard({ players, currentPlayerId }: FullLeader
           return (
             <motion.div
               key={player.id}
-              initial={{ opacity: 0, x: -50 }}
-              animate({{ 
+                initial={{ opacity: 0, x: -50 }}
+                animate={{
                 opacity: 1, 
                 x: 0,
                 transition: { 

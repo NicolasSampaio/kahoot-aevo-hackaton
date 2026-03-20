@@ -67,7 +67,7 @@ export default function FinalResults({
                 {/* Player info */}
                 <div className="flex-1 flex items-center space-x-4">
                   {/* Avatar placeholder */}
-                  <div className="w-10 h-10 bg-gray-600 rounded-flex items-center justify-center text-white">
+                  <div className="w-10 h-10 bg-gray-600 rounded-full flex items-center justify-center text-white">
                     {player.name.charAt(0).toUpperCase()}
                   </div>
                   <div>

@@ -12,9 +12,9 @@ interface PodiumProps {
 export default function Podium({ players }: PodiumProps) {
   // Define medal positions: 3rd (left), 2nd (right), 1st (center)
   const podiumPositions = [
-    { index: 2, x: -80, y: 0, delay: 0 },   // 3rd place - left
-    { index: 1, x: 80, y: 0, delay: 100 },  // 2nd place - right  
-    { index: 0, x: 0, y: -40, delay: 200 }  // 1st place - center, tallest
+    { index: 2, x: -80, y: 0, delay: 0 }, // 3rd place - left
+    { index: 1, x: 80, y: 0, delay: 100 }, // 2nd place - right
+    { index: 0, x: 0, y: -40, delay: 200 } // 1st place - center, tallest
   ];
 
   return (
@@ -27,24 +27,24 @@ export default function Podium({ players }: PodiumProps) {
           <motion.div
             key={player.id}
             initial={{ opacity: 0, y: 50 }}
-            animate({{ 
-              opacity: 1, 
-              y: y, 
+            animate={{
+              opacity: 1,
+              y: y,
               x: x,
-              transition: { 
+              transition: {
                 delay: delay / 1000,
                 type: 'spring',
                 stiffness: 300,
                 damping: 20
-              } 
-            })}
+              }
+            }}
             className="relative flex items-end space-x-2"
           >
             {/* Avatar */}
             <div className="relative">
-              <img 
-                src={player.avatar} 
-                alt={player.name} 
+              <img
+                src={player.avatar}
+                alt={player.name}
                 className="w-12 h-12 rounded-full border-4 border-white shadow-lg"
               />
               {/* Medal overlay */}
@@ -54,7 +54,7 @@ export default function Podium({ players }: PodiumProps) {
                 {index === 2 && '🥉'} {/* Bronze */}
               </div>
             </div>
-            
+
             {/* Player Info */}
             <div className="text-center space-y-1">
               <p className="font-semibold">{player.name}</p>
