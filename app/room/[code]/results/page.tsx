@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useGameState } from '@/hooks/useGameState';
+import { useGameEngine } from '@/hooks/useGameEngine';
 import Podium from '@/components/results/podium';
 import FullLeaderboard from '@/components/results/full-leaderboard';
 import QuestionBreakdown from '@/components/results/question-breakdown';
@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 
 export default function ResultsPage() {
   const params = useParams<{ code: string }>();
-  const { gameState, players, questions } = useGameState();
+  const { gameState, players, questions } = useGameEngine();
 
   if (!gameState || !players || !questions) {
     return <div>Loading...</div>;
