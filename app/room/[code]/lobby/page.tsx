@@ -174,7 +174,7 @@ export default function LobbyPage() {
 
         <div className="mt-8">
           {isHost ? (
-            <motion.div className="text-center">
+            <div className="text-center">
               <Button
                 size="lg"
                 onClick={handleStartGame}
@@ -198,7 +198,7 @@ export default function LobbyPage() {
                   At least 2 players required to start
                 </p>
               )}
-            </motion.div>
+            </div>
           ) : (
             <motion.div
               initial={{ opacity: 0 }}
