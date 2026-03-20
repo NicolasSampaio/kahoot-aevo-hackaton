@@ -30,28 +30,36 @@ export default function LobbyPage() {
 
   useEffect(() => {
     const roomDataStr = sessionStorage.getItem("roomData");
-    const isHostStr = sessionStorage.getItem("isHost");
+    const playerId = sessionStorage.getItem("playerId");
 
-    if (!roomDataStr) {
+    if (!roomDataStr || !playerId) {
       router.push("/");
       return;
     }
 
     const roomData = JSON.parse(roomDataStr);
-    setIsHost(isHostStr === "true");
+    setIsHost(roomData.hostId === playerId);
     setPlayers(roomData.players || []);
     setRoomName(roomData.roomName || "");
 
-    const interval = setInterval(() => {
-      const updatedRoomData = sessionStorage.getItem("roomData");
-      if (updatedRoomData) {
-        const parsed = JSON.parse(updatedRoomData);
-        setPlayers(parsed.players || []);
+    const interval = setInterval(async () => {
+      try {
+        const response = await fetch(`/api/rooms/${roomCode}`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.room) {
+            // Atualiza sessionStorage e estado
+            sessionStorage.setItem("roomData", JSON.stringify(data.room));
+            setPlayers(data.room.players || []);
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch room data:", err);
       }
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [router]);
+  }, [router, roomCode]);
 
   const handleStartGame = () => {
     if (players.length < 2) return;
