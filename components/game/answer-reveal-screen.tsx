@@ -83,7 +83,7 @@ export default function AnswerRevealScreen({
         transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.6 }}
         className="w-full max-w-2xl mb-8"
       >
-        {question.options.map((option, index) => (
+        {question.options.map((option: string, index: number) => (
           <div key={index} className="flex items-center mb-4">
             {/* Shape icon */}
             <div className="w-10 h-10 flex items-center justify-center text-xl mr-4">
@@ -91,11 +91,13 @@ export default function AnswerRevealScreen({
             </div>
             {/* Bar container */}
             <div className="flex-1 bg-gray-800 rounded-full h-4 overflow-hidden">
-              <div
-                className={`h-full bg-${['red', 'blue', 'green', 'yellow'][index]}-500 rounded-full`}
-                style={{ width: optionPercentages[index] + '%' }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              ></div>
+<motion.div
+                    className={`h-full bg-${['red', 'blue', 'green', 'yellow'][index]}-500 rounded-full`}
+                    style={{ width: optionPercentages[index] + '%' }}
+                    initial={{ width: 0 }}
+                    animate={{ width: optionPercentages[index] + '%' }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                  ></motion.div>
             </div>
             {/* Percentage text */}
             <div className="ml-4 w-16 text-right text-sm">
