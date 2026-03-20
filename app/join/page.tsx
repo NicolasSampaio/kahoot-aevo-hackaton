@@ -27,49 +27,40 @@ export default function JoinRoom() {
     );
   };
 
-  const handleJoin = () => {
+  const handleJoin = async () => {
     if (!isValid()) return;
 
     setIsJoining(true);
     setError("");
 
-    const storedRoomData = sessionStorage.getItem("roomData");
-    
-    if (!storedRoomData) {
-      setError("Room not found. Please check the code and try again.");
+    try {
+      const response = await fetch("/api/rooms/join", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          code: roomCode.toUpperCase(),
+          playerName: playerName.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Failed to join room");
+        setIsJoining(false);
+        return;
+      }
+
+      // Store room data locally
+      sessionStorage.setItem("roomData", JSON.stringify(data.room));
+      sessionStorage.setItem("playerId", data.player.id);
+      sessionStorage.setItem("isHost", "false");
+
+      router.push(`/room/${roomCode.toUpperCase()}/lobby`);
+    } catch (err) {
+      setError("Network error. Please try again.");
       setIsJoining(false);
-      return;
     }
-
-    const roomData = JSON.parse(storedRoomData);
-
-    if (roomData.roomCode.toUpperCase() !== roomCode.toUpperCase()) {
-      setError("Room not found. Please check the code and try again.");
-      setIsJoining(false);
-      return;
-    }
-
-    if (roomData.players.length >= roomData.maxPlayers) {
-      setError("Room is full. Please try again later.");
-      setIsJoining(false);
-      return;
-    }
-
-    const playerId = uuidv4();
-    const newPlayer = {
-      id: playerId,
-      name: playerName.trim(),
-      avatar: selectedAvatar,
-      score: 0,
-      isHost: false,
-    };
-
-    roomData.players.push(newPlayer);
-    sessionStorage.setItem("roomData", JSON.stringify(roomData));
-    sessionStorage.setItem("playerId", playerId);
-    sessionStorage.setItem("isHost", "false");
-
-    router.push(`/room/${roomCode.toUpperCase()}/lobby`);
   };
 
   const handleRoomCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
